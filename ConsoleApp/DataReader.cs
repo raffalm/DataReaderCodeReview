@@ -24,10 +24,12 @@
                 while (!streamReader.EndOfStream)
                 {
                     var line = streamReader.ReadLine();
+                    if(String.IsNullOrEmpty(line))
+                        continue;
                     importedLines.Add(line);
                 }
             }
-
+            
             for (int i = 0; i < importedLines.Count; i++)
             {
                 var importedLine = importedLines[i];
