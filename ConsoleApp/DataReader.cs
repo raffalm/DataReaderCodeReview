@@ -9,12 +9,10 @@
 
     public class DataReader
     {
-        IEnumerable<ImportedObject> ImportedObjects;
+        private readonly IList<ImportedObject> ImportedObjects = new List<ImportedObject>();
 
         public void ImportAndPrintData(string fileToImport, bool printData = true)
         {
-            ImportedObjects = new List<ImportedObject>() { new ImportedObject() };
-
             var streamReader = new StreamReader(fileToImport);
 
             var importedLines = new List<string>();
@@ -36,7 +34,7 @@
                 importedObject.ParentType = values[4];
                 importedObject.DataType = values[5];
                 importedObject.IsNullable = values[6];
-                ((List<ImportedObject>)ImportedObjects).Add(importedObject);
+                ImportedObjects.Add(importedObject);
             }
 
             // clear and correct imported data
