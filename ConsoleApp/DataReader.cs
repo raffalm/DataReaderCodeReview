@@ -2,10 +2,8 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Text;
     using System.IO;
     using System.Linq;
-    using System.Threading.Tasks;
 
     public class DataReader
     {
@@ -13,13 +11,14 @@
 
         public void ImportAndPrintData(string fileToImport, bool printData = true)
         {
-            var streamReader = new StreamReader(fileToImport);
-
             var importedLines = new List<string>();
-            while (!streamReader.EndOfStream)
+            using (var streamReader = new StreamReader(fileToImport))
             {
-                var line = streamReader.ReadLine();
-                importedLines.Add(line);
+                while (!streamReader.EndOfStream)
+                {
+                    var line = streamReader.ReadLine();
+                    importedLines.Add(line);
+                }
             }
 
             for (int i = 0; i < importedLines.Count; i++)
@@ -99,16 +98,18 @@
         }
     }
 
-    class ImportedObject : ImportedObjectBaseClass
+    internal class ImportedObject : ImportedObjectBaseClass
     {
         public string Name
         {
             get;
             set;
         }
+
         public string Schema;
 
         public string ParentName;
+
         public string ParentType
         {
             get; set;
@@ -120,7 +121,7 @@
         public double NumberOfChildren;
     }
 
-    class ImportedObjectBaseClass
+    internal class ImportedObjectBaseClass
     {
         public string Name { get; set; }
         public string Type { get; set; }
