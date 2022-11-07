@@ -9,7 +9,7 @@
     {
         private readonly IList<ImportedObject> ImportedObjects = new List<ImportedObject>();
 
-        public void ImportAndPrintData(string fileToImport, bool printData = true)
+        public void ImportAndPrintData(string fileToImport,bool skipHeader, bool printData = true)
         {
             var pathToImport = Path.GetFullPath(fileToImport);
             if (!File.Exists(pathToImport))
@@ -29,8 +29,10 @@
                     importedLines.Add(line);
                 }
             }
-            
-            for (int i = 0; i < importedLines.Count; i++)
+            var firstDataLineIdx=0;
+            if (skipHeader)
+                firstDataLineIdx++;
+            for (int i = firstDataLineIdx; i < importedLines.Count; i++)
             {
                 var importedLine = importedLines[i];
                 var values = importedLine.Split(';');
