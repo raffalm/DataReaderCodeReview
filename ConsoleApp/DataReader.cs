@@ -8,6 +8,7 @@
     public class DataReader
     {
         private readonly IList<ImportedObject> ImportedObjects = new List<ImportedObject>();
+        private readonly int dataColumnCount = 7;
 
         public void ImportAndPrintData(string fileToImport,bool skipHeader, bool printData = true)
         {
@@ -36,6 +37,14 @@
             {
                 var importedLine = importedLines[i];
                 var values = importedLine.Split(';');
+                if (values.Length != dataColumnCount)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("There is incorrect data format:");
+                    Console.WriteLine(String.Join(";", values));
+                    Console.ResetColor();
+                    continue;
+                }
                 var importedObject = new ImportedObject();
                 importedObject.Type = values[0];
                 importedObject.Name = values[1];
