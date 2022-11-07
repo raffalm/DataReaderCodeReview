@@ -11,6 +11,13 @@
 
         public void ImportAndPrintData(string fileToImport, bool printData = true)
         {
+            var pathToImport = Path.GetFullPath(fileToImport);
+            if (!File.Exists(pathToImport))
+            {
+                Console.WriteLine($"File not found in path: {pathToImport}");
+                Console.ReadLine();
+                return;
+            }
             var importedLines = new List<string>();
             using (var streamReader = new StreamReader(fileToImport))
             {
