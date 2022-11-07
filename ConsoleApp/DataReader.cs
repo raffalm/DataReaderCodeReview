@@ -67,21 +67,13 @@
             }
 
             // assign number of children
-            for (int i = 0; i < ImportedObjects.Count(); i++)
+            foreach(var parent in ImportedObjects)
             {
-                var importedObject = ImportedObjects.ToArray()[i];
-                foreach (var impObj in ImportedObjects)
-                {
-                    if (impObj.ParentType == importedObject.Type)
-                    {
-                        if (impObj.ParentName == importedObject.Name)
-                        {
-                            importedObject.NumberOfChildren = 1 + importedObject.NumberOfChildren;
-                        }
-                    }
-                }
+                parent.NumberOfChildren = ImportedObjects
+                    .Where(x => x.ParentType == parent.ParentType && x.ParentName == parent.Name)
+                    .Count();
             }
-
+            
             foreach (var database in ImportedObjects)
             {
                 if (database.Type == "DATABASE")
