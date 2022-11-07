@@ -59,11 +59,11 @@
             // clear and correct imported data
             foreach (var importedObject in ImportedObjects)
             {
-                importedObject.Type = importedObject.Type.Trim().Replace(" ", "").Replace(Environment.NewLine, "").ToUpper();
-                importedObject.Name = importedObject.Name.Trim().Replace(" ", "").Replace(Environment.NewLine, "");
-                importedObject.Schema = importedObject.Schema.Trim().Replace(" ", "").Replace(Environment.NewLine, "");
-                importedObject.ParentName = importedObject.ParentName.Trim().Replace(" ", "").Replace(Environment.NewLine, "");
-                importedObject.ParentType = importedObject.ParentType.Trim().Replace(" ", "").Replace(Environment.NewLine, "");
+                importedObject.Type = importedObject.Type.Trim().Replace(" ", "").ToUpper();
+                importedObject.Name = importedObject.Name.Trim().Replace(" ", "");
+                importedObject.Schema = importedObject.Schema.Trim().Replace(" ", "");
+                importedObject.ParentName = importedObject.ParentName.Trim().Replace(" ", "");
+                importedObject.ParentType = importedObject.ParentType.Trim().Replace(" ", "");
             }
 
             // assign number of children
