@@ -70,7 +70,7 @@
             foreach(var parent in ImportedObjects)
             {
                 parent.NumberOfChildren = ImportedObjects
-                    .Count(x => x.ParentType == parent.ParentType && x.ParentName == parent.Name);
+                    .Count(x => x.ParentType == parent.Type && x.ParentName == parent.Name);
             }
             
             foreach (var database in ImportedObjects)
