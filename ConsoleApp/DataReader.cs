@@ -10,14 +10,14 @@
         private readonly IList<ImportedObject> ImportedObjects = new List<ImportedObject>();
         private readonly int dataColumnCount = 7;
 
-        public void ImportAndPrintData(string fileToImport,bool skipHeader, bool printData = true)
+        public IEnumerable<ImportedObject> ImportData(string fileToImport,bool skipHeader)
         {
             var pathToImport = Path.GetFullPath(fileToImport);
             if (!File.Exists(pathToImport))
             {
                 Console.WriteLine($"File not found in path: {pathToImport}");
                 Console.ReadLine();
-                return;
+                return ImportedObjects;
             }
             var importedLines = new List<string>();
             using (var streamReader = new StreamReader(fileToImport))
@@ -72,24 +72,7 @@
                 parent.NumberOfChildren = ImportedObjects
                     .Count(x => x.ParentType == parent.Type && x.ParentName == parent.Name);
             }
-
-            var databases = ImportedObjects.Where(x => x.Type == "DATABASE");
-            foreach (var database in databases)
-            {
-                Console.WriteLine($"Database '{database.Name}' ({database.NumberOfChildren} tables)");
-                var tables = ImportedObjects.Where(x => x.ParentType == database.Type && x.ParentName == database.Name);
-                foreach (var table in tables)
-                {
-                    Console.WriteLine($"\tTable '{table.Schema}.{table.Name}' ({table.NumberOfChildren} columns)");
-                    var columns = ImportedObjects.Where(x => x.ParentType == table.Type && x.ParentName == table.Name);
-                    foreach (var column in columns)
-                    {
-                        Console.WriteLine($"\t\tColumn '{column.Name}' with {column.DataType} data type {(column.IsNullable == "1" ? "accepts nulls" : "with no nulls")}");
-                    }
-                }
-
-            }
-                Console.ReadLine();
+            return ImportedObjects;
         }
     }
 }
